@@ -73,24 +73,25 @@
                         </button>
                       </div>
 
-                      <form>
+                      <form method="POST" action="{{ route('produk.store') }}">
+                        @csrf
                         <div class="modal-body">
                           <div class="form-group">
                             <label>Nama Barang</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nama">
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nama" name="name">
                           </div>
                           <div class="row">
                             <div class="col-sm-6">
                               <!-- text input -->
                               <div class="form-group">
                                 <label>Harga</label>
-                                <input type="text" class="form-control" placeholder="Harga ...">
+                                <input type="text" class="form-control" placeholder="Harga ..." name="harga">
                               </div>
                             </div>
                             <div class="col-sm-6">
                               <div class="form-group">
                                 <label>Pilih Kategori</label>
-                                <select class="form-control">
+                                <select class="form-control" name="category_id">
                                   <option>option 1</option>
                                   <option>option 2</option>
                                   <option>option 3</option>
@@ -103,14 +104,14 @@
 
                           <div class="form-group">
                             <label>Deskripsi Barang</label>
-                            <textarea class="form-control" rows="3" placeholder="Deskripsi ..."></textarea>
+                            <textarea class="form-control" rows="3" placeholder="Deskripsi ..." name="deskripsi"></textarea>
                           </div>
 
                           <div class="form-group">
                             <label for="exampleInputFile">Pilih Gambar</label>
                             <div class="input-group">
                               <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="exampleInputFile">
+                                <input type="file" class="custom-file-input" id="exampleInputFile" name="image">
                                 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                               </div>
                              
@@ -121,7 +122,7 @@
 
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
+                          <button type="submit" class="btn btn-primary">Tambah</button>
                         </div>
                       </form>
 
