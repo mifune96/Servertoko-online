@@ -35,7 +35,8 @@
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Nama</th>
-                      <th>Email</th>
+                      <th>Harga</th>
+                      <th>Update At</th>
                       <th style="width: 40px">Action</th>
                     </tr>
                   </thead>
@@ -44,7 +45,8 @@
                       <tr>
                         <td>{{ $data->id }}</td>
                         <td>{{ $data->name }}</td>
-                        <td>{{ $data->email }}</td>
+                        <td>{{ "Rp.".number_format($data->harga) }}</td>
+                        <td>{{ $data->updated_at }}</td>
                         <td>
                         <a href="#">
                         <i class="fa fa-edit blue"></i>
@@ -73,7 +75,7 @@
                         </button>
                       </div>
 
-                      <form method="POST" action="{{ route('produk.store') }}">
+                      <form method="POST" action="{{ route('produk.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                           <div class="form-group">
@@ -92,11 +94,11 @@
                               <div class="form-group">
                                 <label>Pilih Kategori</label>
                                 <select class="form-control" name="category_id">
-                                  <option>option 1</option>
-                                  <option>option 2</option>
-                                  <option>option 3</option>
-                                  <option>option 4</option>
-                                  <option>option 5</option>
+                                  <option value="1">option 1</option>
+                                  <option value="2">option 2</option>
+                                  <option value="3">option 3</option>
+                                  <option value="4">option 4</option>
+                                  <option value="5">option 5</option>
                                 </select>
                               </div>
                             </div>
