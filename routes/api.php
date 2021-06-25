@@ -23,4 +23,7 @@ Route::post('chekout', 'Api\TransaksiController@store');
 Route::get('chekout/user/{id}', 'Api\TransaksiController@history');
 Route::post('chekout/batal/{id}', 'Api\TransaksiController@batal');
 
+Route::post('push', 'Api\TransaksiController@pushNotif');
+
+
 
