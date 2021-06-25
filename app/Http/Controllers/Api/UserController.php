@@ -16,6 +16,12 @@ class UserController extends Controller
 
         if($user){
 
+            if($user){
+                $user->update([
+                    'fcm' => $request->fcm
+                ]);
+            }
+
             if(password_verify($request->password, $user->password)){
                 return response()->json([
                     'succes' => 1,

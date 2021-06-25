@@ -15,9 +15,9 @@ class TransaksiController extends Controller
     }
 
     public function batal($id){
-        $transaksi = Transaksi::with(['details.produk'])->where('id', $id)->first();
+        $transaksi = Transaksi::with(['details.produk', 'user'])->where('id', $id)->first();
 
-        $this->pushNotif('Transaksi',"Produk ". $transaksi->details[0]->produk->name ."Telah Berhasil Dibatalkan");
+        $this->pushNotif('Transaksi',"Produk ". $transaksi->details[0]->produk->name ."Telah Berhasil Dibatalkan", $transaksi->user->fcm);
         $transaksi->update([
             'status' => "BATAL"
         ]);
@@ -25,9 +25,9 @@ class TransaksiController extends Controller
     }
 
     public function confirm($id){
-        $transaksi = Transaksi::with(['details.produk'])->where('id', $id)->first();
+        $transaksi = Transaksi::with(['details.produk', 'user'])->where('id', $id)->first();
 
-        $this->pushNotif('Transaksi Telah Dikonfirmasi',"Produk ". $transaksi->details[0]->produk->name ." telah kami konfirmasi Silahkan Tunggu Produk yg anda pesan telahkami konfirmasi");
+        $this->pushNotif('Transaksi Telah Dikonfirmasi',"Produk ". $transaksi->details[0]->produk->name ." telah kami konfirmasi Silahkan Tunggu Produk yg anda pesan telahkami konfirmasi", $transaksi->user->fcm);
         $transaksi->update([
             'status' => "PROSES"
         ]);
@@ -35,9 +35,9 @@ class TransaksiController extends Controller
     }
 
     public function kirim($id){
-        $transaksi = Transaksi::with(['details.produk'])->where('id', $id)->first();
+        $transaksi = Transaksi::with(['details.produk', 'user'])->where('id', $id)->first();
         
-        $this->pushNotif('Transaksi Telah Dikirim',"Produk ". $transaksi->details[0]->produk->name ." Telah kami kirim Silahkan Tunggu Produk yg anda pesan");
+        $this->pushNotif('Transaksi Telah Dikirim',"Produk ". $transaksi->details[0]->produk->name ." Telah kami kirim Silahkan Tunggu Produk yg anda pesan", $transaksi->user->fcm);
         $transaksi->update([
             'status' => "DIKIRIM"
         ]);
@@ -45,24 +45,25 @@ class TransaksiController extends Controller
     }
 
     public function selesai($id){
-        $transaksi = Transaksi::with(['details.produk'])->where('id', $id)->first();
+        $transaksi = Transaksi::with(['details.produk', 'user'])->where('id', $id)->first();
         
-        $this->pushNotif('Transaksi Telah diterima',"Produk ". $transaksi->details[0]->produk->name ."Telah Sampai Semoga Puas dengan pelayanan kami");
+        $this->pushNotif('Transaksi Telah diterima',"Produk ". $transaksi->details[0]->produk->name ."Telah Sampai Semoga Puas dengan pelayanan kami", $transaksi->user->fcm);
         $transaksi->update([
             'status' => "SELESAI"
         ]);
         return redirect('transaksi');
     }
 
-    public function pushNotif($title, $message) {
+    public function pushNotif($title, $message, $mfcm) {
 
         $mData = [
             'title' => $title,
             'body' => $message
         ];
 
-        $fcm[] = "cewbqnRZSFyp1MJtIJyePw:APA91bFSIPh2W4gh-4XF134qPTTBhPjw7EVTT0c6wkiGhGSGNq0bLQrffm9eN16y0ei8nyZiRKqAvFHWvueb59N1EFJ7STPfdUtpT8YxqcGG3tJ7ca_D77dIXiE8J3CacPBQqfKrUT3N";
+        $fcm[] = $mfcm;
 
+    
         $payload = [
             'registration_ids' => $fcm,
             'notification' => $mData

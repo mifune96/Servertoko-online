@@ -94,7 +94,7 @@ class TransaksiController extends Controller
     }
  
     public function batal($id){
-        $transaksi = Transaksi::with(['details.produk'])->where('id', $id)->first();
+        $transaksi = Transaksi::with(['details.produk', 'user'])->where('id', $id)->first();
         if($transaksi){
             //update data
             
@@ -102,7 +102,7 @@ class TransaksiController extends Controller
                 'status' => "BATAL"
             ]);
 
-        $this->pushNotif('Transaksi',"Produk ". $transaksi->details[0]->produk->name ."Telah Berhasil Dibatalkan");
+        $this->pushNotif('Transaksi',"Produk ". $transaksi->details[0]->produk->name ."Telah Berhasil Dibatalkan", $transaksi->user->fcm);
 
             return response()->json([
             'succes' => 1,
@@ -115,15 +115,16 @@ class TransaksiController extends Controller
         }
     }
 
-    public function pushNotif($title, $message) {
+    public function pushNotif($title, $message, $mfcm) {
 
         $mData = [
             'title' => $title,
             'body' => $message
         ];
 
-        $fcm[] = "cewbqnRZSFyp1MJtIJyePw:APA91bFSIPh2W4gh-4XF134qPTTBhPjw7EVTT0c6wkiGhGSGNq0bLQrffm9eN16y0ei8nyZiRKqAvFHWvueb59N1EFJ7STPfdUtpT8YxqcGG3tJ7ca_D77dIXiE8J3CacPBQqfKrUT3N";
+        $fcm[] = $mfcm;
 
+    
         $payload = [
             'registration_ids' => $fcm,
             'notification' => $mData
